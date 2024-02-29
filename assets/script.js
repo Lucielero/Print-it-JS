@@ -18,3 +18,16 @@ const slides = [
 	}
 ]
 
+//EventListener
+arrowRight.addEventListener ('click,' function() { //onclick event
+currentIndex = (currentIndex +1) //next img 
+slideDisplay (currentIndex, 'right') //new index and direction
+displayDot (currentIndex) //dot update
+})
+
+arrowLeft.addEventListener ('click,' function() {
+currentIndex=(currentIndex -1)
+slideDisplay (currentIndex, 'left')
+displayDot (currentIndex)
+})
+
