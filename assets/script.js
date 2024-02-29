@@ -18,38 +18,63 @@ const slides = [
 	}
 ]
 
-//Element selection
-const bannerImg = document.querySelector ('.banner-img') //main img
-const arrowLeft = document.querySelector ('.arrow_left')
-const arrowRight = document.querySelector ('.arrow_right')
-const dots = document.querySelector ('.dot') //all dots
+//Element selection 
 
+const numberOfSlides = slides.length 
 let currentIndex = 0 //index tracking
 
+const leftArrow = document.querySelector ('.arrow_left')
+const rightArrow = document.querySelector ('.arrow_right')
+const dotsContainer = document.querySelector ('.dots')
+
+
 //EventListener
-arrowRight.addEventListener ('click,' function() { //onclick event
-	currentIndex = (currentIndex +1) //next img 
-	slideDisplay (currentIndex, 'right') //new index and direction
-	displayDot (currentIndex) //dot update
+rightArrow.addEventListener("click", () => {
+	currentIndex = (currentIndex === numberOfSlides - 1) ? 0 : currentIndex + 1;
+	updateCarousel();
 })
 
-arrowLeft.addEventListener ('click,' function() {
-	currentIndex=(currentIndex -1)
-	slideDisplay (currentIndex, 'left')
-	displayDot (currentIndex)
-	})
+leftArrow.addEventListener("click", () => {
+	currentIndex = (currentIndex === 0) ? numberOfSlides - 1 : currentIndex - 1;
+	updateCarousel();
+})
 
-//Function 
+//FUNCTIONS 
 
-function slideDisplay (index, direction) {
-	if (currentIndex === 0 && direction ==='right') {
-		currentIndex = slides.length -1
-		}
-		else if (currentIndex ===slides.length -1 && direction ==='left') {
-			currentIndex = 0
-			}
-	const imgPath = 'assets/images/slideshow/slide1' //img path
+//Affichage du carousel en fonction de la position
+function createCarousel () {
+	const currentSlide = slides[currentIndex]
+	const imageElement = document.querySelector(".banner-img")
+	imageElement.setAttribute ("src", "./assets/images/slideshow/" + currentSlide.image)
+	const textElement = document.querySelector (".banner-txt")
+	textElement.innerHTML = currentSlide.tagLine
+	updateDots()
 }
-	
-//Dots Function
 
+//Bulletpoints
+function createDots() {
+	console.log()
+	for (let index = 0; index < numberOfSlides; index++) {
+		const dot = document.createElement("div")
+		dot.classList.add ("dot")
+		dotsContainer.appendChild(dot)
+}
+}
+
+function updateDots() {
+	console.log()
+	const dots = document.querySelectorAll (".dot")
+	dots.forEach ((dot, index) => {
+		dot.classList.toggle("dot_selected", index === currentIndex)
+	})
+}
+
+//MAJ carousel 
+function updateCarousel() {
+ createCarousel()
+}
+
+//CALL
+createCarousel() //appel pour afficher la 1ère diapo
+createDots() //appel initial pour créer les points indicateurs
+console.log()
