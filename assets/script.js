@@ -1,4 +1,3 @@
-//Slides Array 
 const slides = [
 	{
 		"image":"slide1.jpg",
@@ -18,8 +17,7 @@ const slides = [
 	}
 ]
 
-//Element selection 
-
+//Elements selection 
 const numberOfSlides = slides.length 
 let currentIndex = 0 //index tracking
 
@@ -27,54 +25,47 @@ const leftArrow = document.querySelector ('.arrow_left')
 const rightArrow = document.querySelector ('.arrow_right')
 const dotsContainer = document.querySelector ('.dots')
 
+//Initial display
+createCarousel() 
+createDots() 
 
 //EventListener
-rightArrow.addEventListener("click", () => {
-	currentIndex = (currentIndex === numberOfSlides - 1) ? 0 : currentIndex + 1;
-	updateCarousel();
-})
-
-leftArrow.addEventListener("click", () => {
-	currentIndex = (currentIndex === 0) ? numberOfSlides - 1 : currentIndex - 1;
-	updateCarousel();
-})
+rightArrow.addEventListener ("click", () => navigateCarousel (1))
+leftArrow.addEventListener ("click", () => navigateCarousel(-1))
 
 //FUNCTIONS 
+
+//Navigation du carousel en fonction de la direction 
+function navigateCarousel(direction) {
+	currentIndex = (currentIndex + direction + numberOfSlides) % numberOfSlides
+	createCarousel()
+}
 
 //Affichage du carousel en fonction de la position
 function createCarousel () {
 	const currentSlide = slides[currentIndex]
-	const imageElement = document.querySelector(".banner-img")
-	imageElement.setAttribute ("src", "./assets/images/slideshow/" + currentSlide.image)
-	const textElement = document.querySelector (".banner-txt")
-	textElement.innerHTML = currentSlide.tagLine
+	document.querySelector (".banner-img").src = "./assets/images/slideshow/" + currentSlide.image
+	document.querySelector (".banner-txt").innerHTML = currentSlide.tagLine
 	updateDots()
 }
 
 //Bulletpoints
 function createDots() {
-	console.log()
 	for (let index = 0; index < numberOfSlides; index++) {
 		const dot = document.createElement("div")
 		dot.classList.add ("dot")
+		if (index == 0) {
+			dot.classList.add("dot_selected")
+		}
 		dotsContainer.appendChild(dot)
 }
 }
 
+//MAJ Bulletpoints
 function updateDots() {
-	console.log()
 	const dots = document.querySelectorAll (".dot")
 	dots.forEach ((dot, index) => {
+		console.log(index)
 		dot.classList.toggle("dot_selected", index === currentIndex)
 	})
 }
-
-//MAJ carousel 
-function updateCarousel() {
- createCarousel()
-}
-
-//CALL
-createCarousel() //appel pour afficher la 1ère diapo
-createDots() //appel initial pour créer les points indicateurs
-console.log()
