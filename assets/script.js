@@ -17,15 +17,14 @@ const slides = [
 	}
 ]
 
-//Elements selection 
+//Sélection des éléments 
 const numberOfSlides = slides.length 
 let currentIndex = 0 //index tracking
-
 const leftArrow = document.querySelector ('.arrow_left')
 const rightArrow = document.querySelector ('.arrow_right')
 const dotsContainer = document.querySelector ('.dots')
 
-//Initial display
+//Affichage initial
 createCarousel() 
 createDots() 
 
@@ -65,7 +64,6 @@ function createDots() {
 function updateDots() {
 	const dots = document.querySelectorAll (".dot")
 	dots.forEach ((dot, index) => {
-		console.log(index)
 		dot.classList.toggle("dot_selected", index === currentIndex)
 	})
 }
